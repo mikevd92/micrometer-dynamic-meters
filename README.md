@@ -300,6 +300,3 @@ public class HttpMetricFilter extends HttpFilter {
              TimeUnit.NANOSECONDS),TimeUnit.NANOSECONDS);
     }
 }
-The complete code can be found on this GitHub link:
-
-https://github.com/mikevd92/micrometer-dynamic-meters/tree/main/spring-boot-with-metrics
