@@ -95,7 +95,7 @@ public class MeterFilterConfig {
     }
 }
 ```
- Then we are going to implement a base class which is going to implement the generation of
+Then we are going to implement a base class which is going to implement the generation of
 
 the key for all our dynamic meters:
 ```
@@ -127,7 +127,7 @@ public class DynamicCounter extends DynamicMeter {
         return counter;
     }
 }
-``
+```
 ```
 public class DynamicGauge<T> extends DynamicMeter {
     private MeterRegistry registry;
@@ -149,7 +149,7 @@ public class DynamicGauge<T> extends DynamicMeter {
     }
 }
 ```    
-```    
+```
 public class DynamicSummary extends DynamicMeter {
     private MeterRegistry registry;
     private Map<String, DistributionSummary> summaries = new HashMap<>();
