@@ -5,7 +5,7 @@ Recently I've been working around with micrometer meters, and noticed that they 
 In this article I'm presenting novel way of implementing such dynamic metrics.
 
 For starters we are going to need the following spring boot configurations:
-
+```
 @Configuration
 public class ActuatorConfig extends WebMvcEndpointManagementContextConfiguration {
 
@@ -25,6 +25,8 @@ public class ActuatorConfig extends WebMvcEndpointManagementContextConfiguration
         return mapping;
     }
 }
+```
+```
 @Configuration
 public class MeterConfig implements WebMvcConfigurer {
 
@@ -60,6 +62,8 @@ public class MeterConfig implements WebMvcConfigurer {
         registry.addInterceptor(requestCounterInterceptor(meterRegistry));
     }
 }
+```
+```
 @Configuration
 public class MeterFilterConfig {
     @Value("${metrics.namespace}.")
@@ -89,19 +93,20 @@ public class MeterFilterConfig {
             }
         };
     }
-
 }
+```
  Then we are going to implement a base class which is going to implement the generation of
 
 the key for all our dynamic meters:
-
+```
 public class DynamicMeter {
     protected String generateKey(String ...tags) {
         return String.join(":", tags);
     }
 }
+```
 After that we will create the following classes extending the DynamicMeter class:
-
+```
 public class DynamicCounter extends DynamicMeter {
     private MeterRegistry registry;
     private Map<String, Counter> counters = new HashMap<>();
@@ -122,6 +127,8 @@ public class DynamicCounter extends DynamicMeter {
         return counter;
     }
 }
+``
+```
 public class DynamicGauge<T> extends DynamicMeter {
     private MeterRegistry registry;
     private Map<String, T> observedValues = new HashMap<>();
@@ -141,6 +148,8 @@ public class DynamicGauge<T> extends DynamicMeter {
         return existingObject;
     }
 }
+```    
+```    
 public class DynamicSummary extends DynamicMeter {
     private MeterRegistry registry;
     private Map<String, DistributionSummary> summaries = new HashMap<>();
@@ -161,6 +170,8 @@ public class DynamicSummary extends DynamicMeter {
         return summary;
     }
 }
+```    
+```
 public class DynamicTimer extends DynamicMeter {
 
     private MeterRegistry registry;
@@ -182,8 +193,9 @@ public class DynamicTimer extends DynamicMeter {
         return timer;
     }
 }
+```
 Example usage for DynamicCounter:
-
+```
 public class HttpMetricInterceptor implements HandlerInterceptor {
 
      public static final String METHOD = "method";
@@ -225,8 +237,9 @@ public class HttpMetricInterceptor implements HandlerInterceptor {
           }
      }
 }
+```
 Example usage for dynamic gauge:
-
+```
 @Component
 public class HttpMetricFilter extends HttpFilter {
 
@@ -265,8 +278,9 @@ public class HttpMetricFilter extends HttpFilter {
         managedObject.set(stopWatch.elapsed(TimeUnit.NANOSECONDS)/1_000_000_000.0D);
     }
 }
+```    
 Example usage of DynamicTimer:
-
+```
 @Component
 public class HttpMetricFilter extends HttpFilter {
 
@@ -300,3 +314,4 @@ public class HttpMetricFilter extends HttpFilter {
              TimeUnit.NANOSECONDS),TimeUnit.NANOSECONDS);
     }
 }
+```
