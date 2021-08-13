@@ -12,7 +12,7 @@ To run the app:
     
 This will expose Prometheus metrics at `/monitoring/metrics`. This is a simple `key value` listing of metrics. You can check them out using `curl`, for example:
 
-    $ curl http://localhost/monitoring/metrics
+    $ curl https://localhost/monitoring/metrics
     # HELP process_uptime_seconds The uptime of the Java virtual machine
     # TYPE process_uptime_seconds gauge
     process_uptime_seconds 10.284
