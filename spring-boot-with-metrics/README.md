@@ -26,19 +26,6 @@ This will expose Prometheus metrics at `/actuator/prometheus`. This is a simple 
     tomcat_sessions_alive_max_seconds 0.0
     ...    
 
-## Timing a custom method
-
-The method in the application which responds to the REST request has been annotated with `@Timed`, so Micrometer will capture the execution time of this method:
-
-```java
-@GetMapping("/greeting")
-@Timed(value = "greeting.time", description = "Time taken to return greeting",
-        percentiles = {0.5, 0.90})
-public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-    return new Greeting(counter.incrementAndGet(), String.format(template, name));
-}
-```
-
 Once you make a request to the service at <http://localhost:8080/greeting>, you will also see a new metric exposed, `greeting_time_seconds` exposed, which shows the execution time of the `greeting` method:
 
     # HELP greeting_time_seconds Time taken to return greeting
