@@ -250,11 +250,6 @@ public class HttpMetricFilter extends HttpFilter {
     private final DynamicGauge<AtomicDouble> dynamicGauge;
 
     public HttpMetricFilter(MeterRegistry meterRegistry){
-        Timer.Builder timerBuilder= Timer.builder(RESPONSE_TIMER)
-              .description("http request duation")
-              .publishPercentileHistogram()
-              .publishPercentiles();
-        this.meterRegistry=meterRegistry;
         dynamicGauge =new DynamicGauge<>(meterRegistry);
     }
 
