@@ -2,7 +2,7 @@
 
 Recently I've been working around with micrometer meters, and noticed that they are limited in the sense that unlike the Prometheus java client library you can't create dynamic metrics.
 
-In this article I'm presenting novel way of implementing such dynamic metrics.
+In this repo I'm showing off novel way of implementing such dynamic metrics.
 
 For starters we are going to need the following spring boot configurations:
 ```
